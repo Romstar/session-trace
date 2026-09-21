@@ -23,6 +23,10 @@
         <p class="kicker">Cursor and VS Code</p>
         <h1>See the agent work.</h1>
         <p class="lede">Agent Graph draws a live graph of one Cursor agent session. Each action is a node. The badge shows the current phase.</p>
+        <p class="actions">
+          <a class="button" href="https://open-vsx.org/extension/session-trace/agent-graph">Install on Open VSX</a>
+          <a class="quiet" href="https://github.com/Romstar/session-trace">View the source</a>
+        </p>
         <figure class="shot">
           <img src="graph.png" width="1180" height="430" alt="Agent Graph session. A thought leads to a file read, then a subagent lane, a file edit, a passing test, and a completed session.">
           <figcaption>A sample session. The agent reads a parser, asks a subagent about the test, edits the file, and the test passes.</figcaption>
@@ -46,11 +50,11 @@
 
       <section class="install">
         <h2>Use it</h2>
-        <p>The same VSIX runs in Cursor and in VS Code. Hooks post events to a local server. The sidebar draws them as they arrive.</p>
+        <p>Install it from <a href="https://open-vsx.org/extension/session-trace/agent-graph">Open VSX</a>. Cursor and VS Code can both run it. Hooks post events to a local server. The sidebar draws them as they arrive.</p>
         <ol>
-          <li>In this repository, run <code>npm install</code> and <code>npm run package</code>.</li>
-          <li>Install the VSIX from the command palette.</li>
-          <li>Run <code>Install Agent Hooks</code>, then start the Cursor agent.</li>
+          <li>In Cursor, open Extensions and search for <code>session-trace.agent-graph</code>.</li>
+          <li>Install Agent Graph, then run <code>Install Agent Hooks</code>.</li>
+          <li>Start the Cursor agent.</li>
         </ol>
       </section>
     </main>

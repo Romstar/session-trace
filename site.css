@@ -86,6 +86,31 @@ h1 {
   font-size: 20px;
 }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  margin: 22px 0 0;
+}
+
+.button {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.actions a.quiet {
+  font-size: 15px;
+  border-bottom: 1px solid var(--ink);
+  text-decoration: none;
+}
+
 .shot {
   margin: 36px 0 0;
   padding: 0;
