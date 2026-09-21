@@ -1,5 +1,7 @@
 # Agent Graph
 
+Source: https://github.com/Romstar/session-trace
+
 Agent Graph draws a live state graph of a Cursor agent session.
 
 Each agent action is one node. Edges show the order of those actions. Subagent work sits on a child lane. A badge at the top shows the current state: THINKING, ACTING, OBSERVING, WAITING, DONE, or ERROR.
@@ -9,11 +11,11 @@ The same VSIX runs in VS Code and in Cursor. A local ingest server starts when t
 ## Install the VSIX
 
 1. In this folder, run `npm install`.
-2. Run `npm run package`. This writes `agent-graph-0.1.0.vsix`.
+2. Run `npm run package`. This writes `agent-graph-0.1.3.vsix`.
 3. Open VS Code or Cursor.
 4. Open the command palette.
 5. Run `Extensions: Install from VSIX...`.
-6. Choose the `agent-graph-0.1.0.vsix` file.
+6. Choose the `agent-graph-0.1.3.vsix` file.
 7. Reload the window when the editor asks.
 
 The extension activates on startup so the ingest server is up before a hook runs.

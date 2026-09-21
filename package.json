@@ -6,6 +6,11 @@
   "publisher": "agent-graph",
   "private": true,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Romstar/session-trace.git"
+  },
+  "homepage": "https://github.com/Romstar/session-trace",
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -20,7 +25,7 @@
   "scripts": {
     "compile": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.webview.json --noEmit && node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
-    "package": "npm run compile && vsce package --allow-missing-repository",
+    "package": "npm run compile && vsce package",
     "simulate": "tsx scripts/simulate.ts"
   },
   "contributes": {
