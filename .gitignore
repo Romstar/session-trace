@@ -1,0 +1,6 @@
+node_modules/
+dist/
+hooks/hook.js
+*.vsix
+*.map
+.vscode-test/

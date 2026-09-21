@@ -1,0 +1,94 @@
+{
+  "name": "agent-graph",
+  "displayName": "Agent Graph",
+  "description": "Live state-transition graph of a Cursor agent session.",
+  "version": "0.1.0",
+  "publisher": "agent-graph",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "scripts": {
+    "compile": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.webview.json --noEmit && node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "package": "npm run compile && vsce package --allow-missing-repository",
+    "simulate": "tsx scripts/simulate.ts"
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "agent-graph.sidebar",
+          "title": "Agent Graph",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "agent-graph.sidebar": [
+        {
+          "type": "webview",
+          "id": "agent-graph.view",
+          "name": "Agent Graph"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "agent-graph.installHooks",
+        "title": "Install Agent Hooks",
+        "category": "Agent Graph"
+      },
+      {
+        "command": "agent-graph.uninstallHooks",
+        "title": "Uninstall Agent Hooks",
+        "category": "Agent Graph"
+      },
+      {
+        "command": "agent-graph.clearSession",
+        "title": "Clear Agent Graph Session",
+        "category": "Agent Graph"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "agent-graph.installHooks",
+          "when": "view == agent-graph.view",
+          "group": "navigation"
+        },
+        {
+          "command": "agent-graph.clearSession",
+          "when": "view == agent-graph.view",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/dagre": "^0.7.52",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.2.1",
+    "esbuild": "^0.24.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.4.2",
+    "dagre": "^0.8.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

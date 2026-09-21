@@ -1,0 +1,257 @@
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ag-app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--vscode-sideBar-background, #1e1e1e);
+  color: var(--vscode-foreground, #d4d4d4);
+  font-family: var(--vscode-font-family, sans-serif);
+  font-size: var(--vscode-font-size, 13px);
+  container-type: inline-size;
+  container-name: ag;
+}
+
+.ag-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid var(--vscode-panel-border, #333);
+  flex-wrap: wrap;
+}
+
+.ag-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ag-field select,
+.ag-button {
+  background: var(--vscode-input-background, #2a2a2a);
+  color: var(--vscode-input-foreground, #eee);
+  border: 1px solid var(--vscode-input-border, #444);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font: inherit;
+}
+
+.ag-button {
+  background: var(--vscode-button-background, #0e639c);
+  color: var(--vscode-button-foreground, #fff);
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.ag-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.ag-button-secondary {
+  background: var(--vscode-button-secondaryBackground, #3a3d41);
+  color: var(--vscode-button-secondaryForeground, #eee);
+}
+
+.ag-check {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.ag-count {
+  color: var(--vscode-descriptionForeground, #9ca3af);
+  font-size: 12px;
+}
+
+.ag-badge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #fff;
+}
+
+.ag-badge-THINKING { background: #7c3aed; }
+.ag-badge-ACTING { background: #2563eb; }
+.ag-badge-OBSERVING { background: #0f766e; }
+.ag-badge-WAITING { background: #4b5563; }
+.ag-badge-DONE { background: #15803d; }
+.ag-badge-ERROR { background: #b91c1c; }
+
+.ag-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.ag-canvas {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  position: relative;
+}
+
+.ag-canvas .react-flow {
+  width: 100%;
+  height: 100%;
+  background: var(--vscode-editor-background, #1e1e1e);
+}
+
+.ag-empty {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px;
+  gap: 8px;
+}
+
+.ag-empty h2,
+.ag-detail h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ag-empty p,
+.ag-muted {
+  margin: 0;
+  color: var(--vscode-descriptionForeground, #9ca3af);
+  line-height: 1.4;
+}
+
+.ag-detail {
+  width: 250px;
+  flex: none;
+  box-sizing: border-box;
+  border-left: 1px solid var(--vscode-panel-border, #333);
+  padding: 8px;
+  overflow: auto;
+  background: var(--vscode-sideBar-background, #1e1e1e);
+}
+
+.ag-detail-label {
+  margin: 8px 0 4px;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.ag-meta {
+  margin: 4px 0 8px;
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground, #9ca3af);
+}
+
+.ag-detail pre {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.ag-node {
+  width: 188px;
+  height: 52px;
+  box-sizing: border-box;
+  border: 1px solid #6b7280;
+  border-radius: 8px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+.ag-kind {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+
+.ag-label {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ag-node .react-flow__handle {
+  width: 6px;
+  height: 6px;
+  opacity: 0;
+}
+
+.ag-thought { background: #3b0764; border-color: #c084fc; }
+.ag-tool_start,
+.ag-tool_end { background: #172554; border-color: #60a5fa; }
+.ag-shell_start,
+.ag-shell_end { background: #451a03; border-color: #fbbf24; }
+.ag-file_edit { background: #052e16; border-color: #4ade80; }
+.ag-file_read { background: #042f2e; border-color: #2dd4bf; }
+.ag-error { background: #450a0a; border-color: #f87171; }
+.ag-session_start,
+.ag-session_end { background: #1f2937; border-color: #9ca3af; }
+.ag-compact { background: #431407; border-color: #fb923c; }
+.ag-mcp_start,
+.ag-mcp_end { background: #083344; border-color: #22d3ee; }
+.ag-prompt_submit { background: #1e1b4b; border-color: #a5b4fc; }
+.ag-agent_response { background: #2e1065; border-color: #d8b4fe; }
+.ag-subagent_start,
+.ag-subagent_stop { background: #4a044e; border-color: #f0abfc; }
+.ag-stop { background: #1e293b; border-color: #94a3b8; }
+
+.ag-node.is-current {
+  animation: ag-pulse 1.4s ease-out infinite;
+}
+
+@keyframes ag-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.55); }
+  100% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+}
+
+.react-flow__node.selected .ag-node {
+  outline: 2px solid var(--vscode-focusBorder, #fff);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ag-node.is-current {
+    animation: none;
+    outline: 2px solid #fff;
+  }
+}
+
+@container ag (max-width: 560px) {
+  .ag-body {
+    flex-direction: column;
+  }
+
+  .ag-detail {
+    width: auto;
+    max-height: 40%;
+    border-left: none;
+    border-top: 1px solid var(--vscode-panel-border, #333);
+  }
+}
