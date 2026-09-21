@@ -11,3 +11,11 @@ esbuild.mjs
 .gitignore
 **/*.map
 **/*.ts
+docs/**
+index.html
+site.css
+graph.png
+logo.png
+favicon.png
+.nojekyll
+*.vsix

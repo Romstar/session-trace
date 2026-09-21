@@ -1,5 +1,7 @@
 # Agent Graph
 
+<img src="media/logo.png" alt="Agent Graph" width="96">
+
 Source: https://github.com/Romstar/session-trace
 
 Agent Graph draws a live state graph of a Cursor agent session.
