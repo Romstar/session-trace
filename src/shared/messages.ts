@@ -19,6 +19,7 @@ export type HostMessage = {
 /** Webview -> host. */
 export type WebviewMessage =
   | { type: 'ready' }
+  | { type: 'openWindow' }
   | { type: 'selectSession'; sessionId: string }
   | { type: 'clearSession'; sessionId: string | null }
   | { type: 'copyDetail'; text: string };
@@ -30,6 +31,7 @@ export function isWebviewMessage(value: unknown): value is WebviewMessage {
   const record = value as Record<string, unknown>;
   switch (record.type) {
     case 'ready':
+    case 'openWindow':
       return true;
     case 'selectSession':
       return typeof record.sessionId === 'string';

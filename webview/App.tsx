@@ -37,8 +37,15 @@ export function App() {
       setSelectedSessionId(message.selectedSessionId);
     };
     window.addEventListener('message', onMessage);
-    vscode.postMessage({ type: 'ready' });
-    return () => window.removeEventListener('message', onMessage);
+    const ask = () => vscode.postMessage({ type: 'ready' });
+    ask();
+    const timer = window.setInterval(ask, 700);
+    const stop = window.setTimeout(() => window.clearInterval(timer), 5000);
+    return () => {
+      window.removeEventListener('message', onMessage);
+      window.clearInterval(timer);
+      window.clearTimeout(stop);
+    };
   }, []);
 
   useEffect(() => {
@@ -46,9 +53,13 @@ export function App() {
   }, [followLive, selectedKey]);
 
   const visibleSessions = useMemo(() => topLevelSessions(sessions), [sessions]);
+  const activeSessionId =
+    selectedSessionId && visibleSessions.some((session) => session.sessionId === selectedSessionId)
+      ? selectedSessionId
+      : (visibleSessions[visibleSessions.length - 1]?.sessionId ?? null);
   const events = useMemo(
-    () => (selectedSessionId ? eventsForSession(sessions, selectedSessionId) : []),
-    [sessions, selectedSessionId],
+    () => (activeSessionId ? eventsForSession(sessions, activeSessionId) : []),
+    [sessions, activeSessionId],
   );
   const state = deriveState(events);
   const selectedEvent = events.find((event) => eventKey(event) === selectedKey) ?? null;
@@ -59,7 +70,7 @@ export function App() {
         <label className="ag-field">
           <span>Session</span>
           <select
-            value={selectedSessionId ?? ''}
+            value={activeSessionId ?? ''}
             onChange={(event) => {
               const sessionId = event.target.value;
               if (sessionId) {
@@ -87,11 +98,18 @@ export function App() {
         <button
           type="button"
           className="ag-button ag-button-secondary"
-          disabled={!selectedSessionId}
+          onClick={() => vscode.postMessage({ type: 'openWindow' })}
+        >
+          Open in Large Window
+        </button>
+        <button
+          type="button"
+          className="ag-button ag-button-secondary"
+          disabled={!activeSessionId}
           onClick={() => {
-            if (selectedSessionId) {
+            if (activeSessionId) {
               setSelectedKey(null);
-              vscode.postMessage({ type: 'clearSession', sessionId: selectedSessionId });
+              vscode.postMessage({ type: 'clearSession', sessionId: activeSessionId });
             }
           }}
         >
@@ -112,7 +130,7 @@ export function App() {
             </div>
           ) : (
             <GraphView
-              key={selectedSessionId ?? 'none'}
+              key={activeSessionId ?? 'none'}
               events={events}
               followLive={followLive}
               selectedKey={selectedKey}

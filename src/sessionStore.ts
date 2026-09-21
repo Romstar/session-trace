@@ -20,6 +20,7 @@ export class SessionStore {
   /** subagent id -> parent session, so later child events can join the parent graph. */
   private readonly subagentParents = new Map<string, { parentSessionId: string; toolCallId?: string }>();
   private readonly listeners = new Set<() => void>();
+  private lastEncoded = '';
 
   onChange(listener: () => void): () => void {
     this.listeners.add(listener);
@@ -61,6 +62,23 @@ export class SessionStore {
       this.sessions.clear();
       this.nextSeq.clear();
       this.subagentParents.clear();
+    }
+    this.emit();
+  }
+
+  /** Replace the log with a snapshot from the shared ingest server. */
+  replace(snapshots: SessionSnapshot[]): void {
+    const encoded = JSON.stringify(snapshots);
+    if (encoded === this.lastEncoded) {
+      return;
+    }
+    this.lastEncoded = encoded;
+    this.sessions.clear();
+    this.nextSeq.clear();
+    for (const snapshot of snapshots) {
+      this.sessions.set(snapshot.sessionId, snapshot.events.slice());
+      const maxSeq = snapshot.events.reduce((max, event) => Math.max(max, event.seq), 0);
+      this.nextSeq.set(snapshot.sessionId, maxSeq);
     }
     this.emit();
   }

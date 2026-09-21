@@ -26,7 +26,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   );
 
   try {
-    await server.start();
+    const followed = await server.followExisting();
+    if (!followed) {
+      await server.start();
+    }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     output.appendLine(`Ingest server failed: ${message}`);
@@ -34,11 +37,16 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   }
 
   context.subscriptions.push(
+    vscode.commands.registerCommand('agent-graph.openWindow', () => provider.openInNewWindow()),
     vscode.commands.registerCommand('agent-graph.installHooks', () => installHooks(context)),
     vscode.commands.registerCommand('agent-graph.uninstallHooks', () => uninstallHooks()),
-    vscode.commands.registerCommand('agent-graph.clearSession', () => {
+    vscode.commands.registerCommand('agent-graph.clearSession', async () => {
       const selected = provider.selectedSessionIdValue;
-      store.clear(selected);
+      if (server.isFollowing) {
+        await server.clearRemote(selected);
+      } else {
+        store.clear(selected);
+      }
       void vscode.window.showInformationMessage(
         selected ? `Cleared session ${selected}.` : 'Cleared all agent graph sessions.',
       );

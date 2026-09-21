@@ -12,6 +12,7 @@ export class AgentGraphViewProvider implements vscode.WebviewViewProvider {
   public static readonly viewId = 'agent-graph.view';
 
   private view: vscode.WebviewView | undefined;
+  private readonly panels = new Set<vscode.WebviewPanel>();
   private selectedSessionId: string | null = null;
 
   constructor(
@@ -25,15 +26,42 @@ export class AgentGraphViewProvider implements vscode.WebviewViewProvider {
 
   resolveWebviewView(view: vscode.WebviewView): void {
     this.view = view;
-    view.webview.options = {
-      enableScripts: true,
-      localResourceRoots: [vscode.Uri.joinPath(this.context.extensionUri, 'dist')],
-    };
-    view.webview.onDidReceiveMessage((message: unknown) => this.onMessage(message));
-    view.webview.html = this.html(view.webview);
+    this.mount(view.webview);
+    view.onDidChangeVisibility(() => {
+      if (view.visible) {
+        this.postSnapshot();
+      }
+    });
     view.onDidDispose(() => {
       this.view = undefined;
     });
+  }
+
+  /** Open the graph as an editor, then move that editor into a new window. */
+  async openInNewWindow(): Promise<void> {
+    const panel = vscode.window.createWebviewPanel(
+      'agent-graph.window',
+      'Agent Graph',
+      vscode.ViewColumn.Active,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+        localResourceRoots: [vscode.Uri.joinPath(this.context.extensionUri, 'dist')],
+      },
+    );
+    this.panels.add(panel);
+    this.mount(panel.webview);
+    panel.onDidDispose(() => {
+      this.panels.delete(panel);
+    });
+    panel.reveal(vscode.ViewColumn.Active);
+    try {
+      await vscode.commands.executeCommand('workbench.action.moveEditorToNewWindow');
+    } catch {
+      void vscode.window.showInformationMessage(
+        'Agent Graph is open as a tab. Drag the tab out to make a window.',
+      );
+    }
   }
 
   refresh(): void {
@@ -47,6 +75,9 @@ export class AgentGraphViewProvider implements vscode.WebviewViewProvider {
     switch (message.type) {
       case 'ready':
         this.postSnapshot();
+        return;
+      case 'openWindow':
+        void this.openInNewWindow();
         return;
       case 'selectSession':
         this.selectedSessionId = message.sessionId;
@@ -75,6 +106,18 @@ export class AgentGraphViewProvider implements vscode.WebviewViewProvider {
       selectedSessionId: this.selectedSessionId,
     };
     void this.view?.webview.postMessage(message);
+    for (const panel of this.panels) {
+      void panel.webview.postMessage(message);
+    }
+  }
+
+  private mount(webview: vscode.Webview): void {
+    webview.options = {
+      enableScripts: true,
+      localResourceRoots: [vscode.Uri.joinPath(this.context.extensionUri, 'dist')],
+    };
+    webview.onDidReceiveMessage((message: unknown) => this.onMessage(message));
+    webview.html = this.html(webview);
   }
 
   private html(webview: vscode.Webview): string {
