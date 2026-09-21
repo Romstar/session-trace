@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Graph</title>
+  <meta name="description" content="Agent Graph draws a live graph of a Cursor agent session. Each action is a node.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Newsreader:opsz,wght@6..72,450&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="mark" href="./">Agent Graph</a>
+      <a class="repo" href="https://github.com/Romstar/session-trace">GitHub</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="kicker">Cursor and VS Code</p>
+        <h1>See the agent work.</h1>
+        <p class="lede">Agent Graph draws a live graph of one Cursor agent session. Each action is a node. The badge shows the current phase.</p>
+        <figure class="shot">
+          <img src="graph.png" width="1180" height="430" alt="Agent Graph session. A thought leads to a file read, then a subagent lane, a file edit, a passing test, and a completed session.">
+          <figcaption>A sample session. The agent reads a parser, asks a subagent about the test, edits the file, and the test passes.</figcaption>
+        </figure>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Nodes</h2>
+          <p>Thoughts, tools, edits, and shell commands stay in order. Click a node to read the payload.</p>
+        </article>
+        <article class="card">
+          <h2>Child lanes</h2>
+          <p>Subagent work branches off the parent tool. The lane returns when that work ends.</p>
+        </article>
+        <article class="card">
+          <h2>Phase</h2>
+          <p>The badge shows THINKING, ACTING, OBSERVING, WAITING, DONE, or ERROR.</p>
+        </article>
+      </section>
+
+      <section class="install">
+        <h2>Use it</h2>
+        <p>The same VSIX runs in Cursor and in VS Code. Hooks post events to a local server. The sidebar draws them as they arrive.</p>
+        <ol>
+          <li>In this repository, run <code>npm install</code> and <code>npm run package</code>.</li>
+          <li>Install the VSIX from the command palette.</li>
+          <li>Run <code>Install Agent Hooks</code>, then start the Cursor agent.</li>
+        </ol>
+      </section>
+    </main>
+
+    <p class="foot">Source: <a href="https://github.com/Romstar/session-trace">github.com/Romstar/session-trace</a></p>
+  </div>
+</body>
+</html>
