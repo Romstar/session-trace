@@ -2,7 +2,7 @@
   "name": "agent-graph",
   "displayName": "Agent Graph",
   "description": "Live state-transition graph of a Cursor agent session.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "publisher": "session-trace",
   "license": "MIT",
   "icon": "media/icon.png",

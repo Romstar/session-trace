@@ -13,11 +13,11 @@ The same VSIX runs in VS Code and in Cursor. A local ingest server starts when t
 ## Install the VSIX
 
 1. In this folder, run `npm install`.
-2. Run `npm run package`. This writes `agent-graph-0.1.3.vsix`.
+2. Run `npm run package`. This writes `agent-graph-0.1.4.vsix`.
 3. Open VS Code or Cursor.
 4. Open the command palette.
 5. Run `Extensions: Install from VSIX...`.
-6. Choose the `agent-graph-0.1.3.vsix` file.
+6. Choose the `agent-graph-0.1.4.vsix` file.
 7. Reload the window when the editor asks.
 
 The extension activates on startup so the ingest server is up before a hook runs.
